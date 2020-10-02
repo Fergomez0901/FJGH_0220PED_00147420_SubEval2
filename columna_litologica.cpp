@@ -25,7 +25,7 @@ bool empty(Stack *s)
 void push(Stack *s, string tipoSuelo, float grosor, int dureza)
 {
     struct Nodo *node; 
-    node = new Nodo; 
+    node = (struct Nodo *)malloc(sizeof(struct Nodo));
     node -> tipoSuelo = tipoSuelo; 
     node -> grosor = grosor; 
     node -> dureza = dureza; 
@@ -60,17 +60,27 @@ void vaciarPila(Stack *s)
 
 float promDureza(Stack *s)
 {
+    float suma = 0, promedio, contador = 0; 
 
+    while(!empty(s))
+    {
+        suma += (*s)->dureza; 
+        pop(s);
+        contador++; //total de elementos en la pila
+    }
+
+    promedio = suma / contador; 
 }
+
 
 void menu(Stack *s)
 {
-    int opcion; 
+    int opcion = 0; 
     bool estado = true; 
+    float grosor = 0; 
+    int dureza = 0;
     string tipoSuelo; 
-    int n, dureza;
-    float grosor; 
-        
+    int n = 0;     
 
     while(estado)
     {
@@ -92,18 +102,25 @@ void menu(Stack *s)
             cin >> n; 
             cout << endl; 
 
+            for(int i = 1; i<=n; i++)
+            {
+            cout << "Datos capa " << i << ": " << endl; 
             cout << "Ingrese el tipo de capa: ";
-            getline(cin, tipoSuelo);
-            cin.ignore(); 
+            cin >> tipoSuelo;                   //Al usar getline el programa para de funcionar, no se porque
 
-            cout << "Ingrese el grosor de la capa: ";
-            cin >> grosor; 
+            while(grosor <= 0)          //un valor de 0 o negativo no tiene sentido 
+            {
+                cout << "Ingrese el grosor de la capa: ";
+                cin >> grosor; 
+            }
 
             cout <<"Ingrese el indice de dureza de la capa: "; 
             cin >> dureza; 
+            cout << endl; 
                 
             push(s, tipoSuelo, grosor, dureza);
-        
+            }
+
         break;
 
         case 2: 
@@ -122,7 +139,6 @@ void menu(Stack *s)
         break; 
 
         case 4:
-        
         cout << "El promedio de dureza de la pila es: " << promDureza(s);; 
         break; 
 
