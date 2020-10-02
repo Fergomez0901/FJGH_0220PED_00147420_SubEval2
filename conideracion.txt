@@ -1,0 +1,3 @@
+# FJGH_0220PED_00147420_SubEval2
+
+por favor tomar en cuenta la creacion de las funciones y no solo el hecho que corrio o no :/, me daba error de segmentation fau
